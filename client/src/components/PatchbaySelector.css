@@ -1,0 +1,33 @@
+.patchbay-selector {
+  padding: 1.5rem;
+  border-bottom: 1px solid #444;
+}
+
+.patchbay-selector h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.patchbay-types {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.patchbay-type-btn {
+  padding: 0.75rem;
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.patchbay-type-btn:hover {
+  background-color: #007acc;
+  border-color: #007acc;
+}

@@ -1,0 +1,118 @@
+.patchbay {
+  position: absolute;
+  background-color: #2d2d2d;
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  min-width: 200px;
+  z-index: 10;
+  user-select: none;
+}
+
+.patchbay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #3a3a3a;
+  border-bottom: 2px solid #555;
+  border-radius: 5px 5px 0 0;
+  cursor: move;
+}
+
+.patchbay-label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
+  cursor: text;
+}
+
+.patchbay-label-input {
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid #007acc;
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+  outline: none;
+  width: 100%;
+}
+
+.delete-btn {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #b71c1c;
+}
+
+.patchbay-body {
+  padding: 1rem;
+  background-color: #2d2d2d;
+}
+
+.jack-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 20px);
+  gap: 5px;
+}
+
+.jack {
+  width: 20px;
+  height: 20px;
+  background-color: #1a1a1a;
+  border: 2px solid #666;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.jack:hover {
+  background-color: #007acc;
+  border-color: #0096ff;
+  transform: scale(1.2);
+}
+
+.jack.connecting {
+  background-color: #ffff00;
+  border-color: #ffff00;
+  animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+.patchbay-footer {
+  padding: 0.5rem;
+  background-color: #3a3a3a;
+  border-top: 2px solid #555;
+  border-radius: 0 0 5px 5px;
+  text-align: center;
+}
+
+.patchbay-type {
+  font-size: 0.85rem;
+  color: #aaa;
+  font-weight: 600;
+}
