@@ -77,6 +77,18 @@ npm run server
 npm run client
 ```
 
+## Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions on deploying to:
+- **Frontend:** GitHub Pages (free)
+- **Backend:** Render.com (free tier)
+
+Quick deploy:
+```bash
+cd client
+npm run deploy
+```
+
 ## Usage
 
 1. **Add Patchbays**: Click on patchbay types in the left sidebar to add them to your layout

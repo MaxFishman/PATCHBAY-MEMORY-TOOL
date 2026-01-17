@@ -5,6 +5,8 @@ import LayoutManager from './components/LayoutManager';
 import PatchbaySelector from './components/PatchbaySelector';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 function App() {
   const [layouts, setLayouts] = useState([]);
   const [currentLayout, setCurrentLayout] = useState(null);
@@ -19,7 +21,7 @@ function App() {
 
   const fetchLayouts = async () => {
     try {
-      const response = await axios.get('/api/layouts');
+      const response = await axios.get(`${API_URL}/api/layouts`);
       setLayouts(response.data);
     } catch (error) {
       console.error('Error fetching layouts:', error);
@@ -28,7 +30,7 @@ function App() {
 
   const loadLayout = async (layoutId) => {
     try {
-      const response = await axios.get(`/api/layouts/${layoutId}`);
+      const response = await axios.get(`${API_URL}/api/layouts/${layoutId}`);
       const layout = response.data;
       setCurrentLayout(layout.id);
       setLayoutTitle(layout.title);
@@ -59,10 +61,10 @@ function App() {
       };
 
       if (currentLayout) {
-        await axios.put(`/api/layouts/${currentLayout}`, layoutData);
+        await axios.put(`${API_URL}/api/layouts/${currentLayout}`, layoutData);
         alert('Layout updated successfully!');
       } else {
-        const response = await axios.post('/api/layouts', layoutData);
+        const response = await axios.post(`${API_URL}/api/layouts`, layoutData);
         setCurrentLayout(response.data.id);
         alert('Layout saved successfully!');
       }
@@ -76,7 +78,7 @@ function App() {
   const deleteLayout = async (layoutId) => {
     if (window.confirm('Are you sure you want to delete this layout?')) {
       try {
-        await axios.delete(`/api/layouts/${layoutId}`);
+        await axios.delete(`${API_URL}/api/layouts/${layoutId}`);
         if (currentLayout === layoutId) {
           newLayout();
         }
