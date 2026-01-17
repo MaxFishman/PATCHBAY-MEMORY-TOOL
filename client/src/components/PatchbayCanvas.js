@@ -99,12 +99,23 @@ function PatchbayCanvas({
     const jacksPerSection = totalJacks / 2; // Half for inputs, half for outputs
     const jacksPerRow = 8;
     
-    // Container spacing
-    const containerWidth = 28; // Width of each jack container (jack + label + gap)
-    const containerHeight = 33; // Height including label
-    const baseX = patchbay.position_x + 16; // Left padding
-    const headerHeight = 60; // Header height
-    const sectionHeaderHeight = 30; // "INPUTS"/"OUTPUTS" header
+    // Layout measurements based on actual CSS
+    const bodyPadding = 16; // 1rem padding on patchbay-body
+    const gridGap = 8; // gap: 8px from jack-grid
+    const jackSize = 20; // jack width/height
+    const labelHeight = 10; // approximate label height (0.65rem)
+    const containerGap = 3; // gap between label and jack
+    
+    // Calculate grid column width (patchbay min-width is 250px, minus padding and borders)
+    const patchbayWidth = 250; // min-width from CSS
+    const gridWidth = patchbayWidth - (bodyPadding * 2); // 218px
+    const columnWidth = (gridWidth - (gridGap * 7)) / 8; // Divide by 8 columns, subtract 7 gaps
+    
+    // Starting positions
+    const baseX = patchbay.position_x + bodyPadding;
+    const headerHeight = 60; // Approximate header height
+    const sectionHeaderHeight = 24; // section-header height (font + padding + border)
+    const sectionHeaderMargin = 8; // 0.5rem margin-bottom
     
     // Determine if this jack is in the inputs or outputs section
     const isOutput = jackIndex >= jacksPerSection;
@@ -113,21 +124,31 @@ function PatchbayCanvas({
     const row = Math.floor(localIndex / jacksPerRow);
     const col = localIndex % jacksPerRow;
     
+    // Calculate X position - center of the jack in its grid cell
+    const x = baseX + (col * (columnWidth + gridGap)) + (columnWidth / 2);
+    
     // Calculate Y position
-    let y = patchbay.position_y + headerHeight + sectionHeaderHeight + 10; // Start after header
+    let y = patchbay.position_y + headerHeight + bodyPadding + sectionHeaderHeight + sectionHeaderMargin;
+    y += labelHeight + containerGap; // Account for label above jack
     
     if (isOutput) {
-      // Add inputs section height + divider + outputs header
+      // Add inputs section height
       const inputRows = Math.ceil(jacksPerSection / jacksPerRow);
-      y += inputRows * containerHeight + 20 + sectionHeaderHeight; // 20 for divider
+      const sectionMargin = 12; // 0.75rem margin-bottom on patchbay-section
+      const dividerHeight = 2;
+      const dividerMargin = 12; // 0.75rem margin on divider (top and bottom)
+      
+      y += inputRows * (labelHeight + containerGap + jackSize + gridGap);
+      y += sectionMargin + dividerHeight + dividerMargin;
+      y += sectionHeaderHeight + sectionHeaderMargin;
+      y += labelHeight + containerGap; // Label for output section
     }
     
-    y += row * containerHeight;
+    // Add row offset
+    y += row * (labelHeight + containerGap + jackSize + gridGap);
+    y += jackSize / 2; // Center on jack
 
-    return {
-      x: baseX + col * containerWidth + 10, // Center on jack
-      y: y + 10, // Center on jack (after label)
-    };
+    return { x, y };
   };
 
   const cancelConnection = () => {
