@@ -79,15 +79,17 @@ npm run client
 
 ## Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions on deploying to:
-- **Frontend:** GitHub Pages (free)
-- **Backend:** Render.com (free tier)
+### ⚡ Recommended: Vercel (Easiest)
+Deploy everything in seconds with zero configuration:
+1. Go to https://vercel.com/new
+2. Import this GitHub repository
+3. Click "Deploy"
+4. Done! Your app is live ✨
 
-Quick deploy:
-```bash
-cd client
-npm run deploy
-```
+See [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) for detailed info.
+
+### Alternative: GitHub Pages + Render
+For manual control, see [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## Usage
 

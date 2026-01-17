@@ -1,0 +1,9 @@
+node_modules/
+.git/
+build/
+dist/
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.log
