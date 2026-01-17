@@ -10,9 +10,9 @@ const getAPIUrl = () => {
   if (process.env.REACT_APP_API_URL) {
     return process.env.REACT_APP_API_URL;
   }
-  // In production (Vercel), use relative paths for serverless functions
+  // In production on Vercel, use relative /api path (served by same domain)
   if (process.env.NODE_ENV === 'production') {
-    return '';
+    return window.location.origin;
   }
   // In development, use localhost
   return 'http://localhost:5000';
