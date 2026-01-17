@@ -83,15 +83,50 @@ function PatchbayCanvas({
     const patchbay = patchbays.find(pb => pb.id === patchbayId);
     if (!patchbay) return { x: 0, y: 0 };
 
+    // Configuration for patchbay types
+    const PATCHBAY_CONFIG = {
+      'TT-96': { jacks: 96 },
+      'TT-48': { jacks: 48 },
+      'TT-24': { jacks: 24 },
+      'Bantam-96': { jacks: 96 },
+      'Bantam-48': { jacks: 48 },
+      '1/4-48': { jacks: 48 },
+      '1/4-24': { jacks: 24 },
+    };
+
+    const config = PATCHBAY_CONFIG[patchbay.type] || { jacks: 48 };
+    const totalJacks = config.jacks;
+    const jacksPerSection = totalJacks / 2; // Half for inputs, half for outputs
     const jacksPerRow = 8;
-    const jackWidth = 20;
-    const jackHeight = 20;
-    const row = Math.floor(jackIndex / jacksPerRow);
-    const col = jackIndex % jacksPerRow;
+    
+    // Container spacing
+    const containerWidth = 28; // Width of each jack container (jack + label + gap)
+    const containerHeight = 33; // Height including label
+    const baseX = patchbay.position_x + 16; // Left padding
+    const headerHeight = 60; // Header height
+    const sectionHeaderHeight = 30; // "INPUTS"/"OUTPUTS" header
+    
+    // Determine if this jack is in the inputs or outputs section
+    const isOutput = jackIndex >= jacksPerSection;
+    const localIndex = isOutput ? jackIndex - jacksPerSection : jackIndex;
+    
+    const row = Math.floor(localIndex / jacksPerRow);
+    const col = localIndex % jacksPerRow;
+    
+    // Calculate Y position
+    let y = patchbay.position_y + headerHeight + sectionHeaderHeight + 10; // Start after header
+    
+    if (isOutput) {
+      // Add inputs section height + divider + outputs header
+      const inputRows = Math.ceil(jacksPerSection / jacksPerRow);
+      y += inputRows * containerHeight + 20 + sectionHeaderHeight; // 20 for divider
+    }
+    
+    y += row * containerHeight;
 
     return {
-      x: patchbay.position_x + 40 + col * jackWidth,
-      y: patchbay.position_y + 80 + row * jackHeight,
+      x: baseX + col * containerWidth + 10, // Center on jack
+      y: y + 10, // Center on jack (after label)
     };
   };
 

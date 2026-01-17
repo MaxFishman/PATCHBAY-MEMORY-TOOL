@@ -16,7 +16,6 @@ function Patchbay({ patchbay, onMouseDown, onDelete, onUpdateLabel, onJackClick,
   const [labelValue, setLabelValue] = useState(patchbay.label);
 
   const config = PATCHBAY_CONFIG[patchbay.type] || { jacks: 48, rows: 6 };
-  const jacksPerRow = 8;
 
   const handleLabelSubmit = () => {
     onUpdateLabel(labelValue);
@@ -83,15 +82,41 @@ function Patchbay({ patchbay, onMouseDown, onDelete, onUpdateLabel, onJackClick,
       </div>
 
       <div className="patchbay-body">
-        <div className="jack-grid">
-          {Array.from({ length: config.jacks }, (_, i) => (
-            <div
-              key={i}
-              className={`jack ${isJackConnected(i) ? 'connecting' : ''}`}
-              onClick={(e) => handleJackClick(e, i)}
-              title={`Jack ${i + 1}`}
-            />
-          ))}
+        <div className="patchbay-section">
+          <div className="section-header">⬇ INPUTS</div>
+          <div className="jack-grid">
+            {Array.from({ length: config.jacks / 2 }, (_, i) => (
+              <div key={i} className="jack-container">
+                <div className="jack-label">{i + 1}</div>
+                <div
+                  className={`jack jack-input ${isJackConnected(i) ? 'connecting' : ''}`}
+                  onClick={(e) => handleJackClick(e, i)}
+                  title={`${patchbay.label} - Input ${i + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="patchbay-divider" />
+        
+        <div className="patchbay-section">
+          <div className="section-header">⬆ OUTPUTS</div>
+          <div className="jack-grid">
+            {Array.from({ length: config.jacks / 2 }, (_, i) => {
+              const jackIndex = i + config.jacks / 2;
+              return (
+                <div key={jackIndex} className="jack-container">
+                  <div className="jack-label">{i + 1}</div>
+                  <div
+                    className={`jack jack-output ${isJackConnected(jackIndex) ? 'connecting' : ''}`}
+                    onClick={(e) => handleJackClick(e, jackIndex)}
+                    title={`${patchbay.label} - Output ${i + 1}`}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 

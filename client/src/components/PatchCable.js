@@ -38,6 +38,7 @@ function PatchCable({ from, to, color, onClick, temporary }) {
         strokeWidth="4"
         fill="none"
         strokeLinecap="round"
+        strokeDasharray={temporary ? "8,4" : "none"}
         style={{ pointerEvents: 'stroke' }}
       />
       
@@ -51,9 +52,18 @@ function PatchCable({ from, to, color, onClick, temporary }) {
         style={{ pointerEvents: 'none' }}
       />
 
-      {/* Connection points */}
-      <circle cx={from.x} cy={from.y} r="5" fill={color} stroke="#000" strokeWidth="1" />
-      <circle cx={to.x} cy={to.y} r="5" fill={color} stroke="#000" strokeWidth="1" />
+      {/* Connection points with plug appearance */}
+      <g className="cable-plug">
+        {/* From plug */}
+        <circle cx={from.x} cy={from.y} r="6" fill="#222" stroke="#000" strokeWidth="1" />
+        <circle cx={from.x} cy={from.y} r="4" fill={color} stroke={color} strokeWidth="1" />
+        <circle cx={from.x} cy={from.y} r="2" fill="rgba(255, 255, 255, 0.3)" />
+        
+        {/* To plug */}
+        <circle cx={to.x} cy={to.y} r="6" fill="#222" stroke="#000" strokeWidth="1" />
+        <circle cx={to.x} cy={to.y} r="4" fill={color} stroke={color} strokeWidth="1" />
+        <circle cx={to.x} cy={to.y} r="2" fill="rgba(255, 255, 255, 0.3)" />
+      </g>
     </g>
   );
 }
